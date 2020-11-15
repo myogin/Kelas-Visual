@@ -1,0 +1,42 @@
+.login-bg {
+    background-image: url("image/flat-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.login-yogi{
+    background: linear-gradient(45deg,#8e24aa,#ff6e40) !important;
+    border-radius: 5px !important;
+    border: none;
+}
+.login-box-yogi{
+    background-color: rgba(255,255,255,.8) !important;
+    border-radius: 5px;
+    width: 500px !important;
+    padding: 20px 40px !important;
+    color: black;
+}
+.login-box-yogi h2{
+    margin-top: 10px !important;
+    font-weight: 400;
+    color: #333 !important;
+}
+.login-box-yogi p{
+    color: #333 !important;
+    font-weight: 600 !important;
+    margin: 10px 0px !important;
+    font-size: 15px;
+}
+.login-box-yogi input[type="email"], .login-box-yogi input[type="password"]{
+    color: #70558c  !important;
+}
+.login-box-body .glyphicon {
+    color: #ee4c7b !important;
+}
+.forgot-yogi a{
+    float: right;
+    color: #2498ff !important;
+    margin-top: 30px;
+}
+.forgot-yogi a:hover{
+    color: #0e7fe3 !important;
+}

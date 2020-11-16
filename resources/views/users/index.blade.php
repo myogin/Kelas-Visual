@@ -38,6 +38,8 @@
                             <th>No</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -49,6 +51,8 @@
                             <th>No</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -93,8 +97,8 @@
                     <div class="form-group">
                         <label>Select</label>
                         <select class="form-control" name="role">
-                          <option value="client">client</option>
-                          <option value="admin">admin</option>
+                          <option id="rclient" value="client">client</option>
+                          <option id="radmin" value="admin">admin</option>
                         </select>
                       </div>
                     <!-- radio -->
@@ -117,7 +121,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary pull-left">Tambah Users</button>
+                <button type="submit" class="btn btn-primary pull-left submit">Tambah Users</button>
                 <button type="buton" class="btn btn-default " data-dismiss="modal">Close</button>
 
             </div>
@@ -159,15 +163,15 @@
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="text" id="sname" class="form-control" disabled="">
                         </div>
-                        <h5>Username</h5>
-                        <div class="input-group">
-                            <span class="input-group-addon">@</span>
-                            <input type="text" id="susername"class="form-control" disabled="">
-                        </div>
                         <h5>Email</h5>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                             <input type="email" id="semail"class="form-control" disabled="">
+                        </div>
+                        <h5>Role</h5>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" id="srole" class="form-control" disabled="">
                         </div>
                     </div>
                 </div>
@@ -198,8 +202,21 @@
                 },width: '20'},
         {data: 'name', name: 'name'},
         {data: 'email', name: 'email'},
+        {data: 'role', name: 'role'},
+        {data: 'status', name: 'status'},
         {data: 'action', name: 'action', orderable: false, searchable: false,width: '115px'}
-        ]
+        ],
+        columnDefs: [{targets: 3,
+            render: function ( data, type, row ) {
+            var css1 = 'black';
+            if (data == 'admin') {
+                css1 = ' bg-olive btn-flat btn-xs';
+            }if (data == 'client') {
+                css1 = ' bg-navy btn-flat btn-xs';
+            }
+            return '<span class="'+ css1 +'">' + data + '</span>';
+            }
+    }]
     });
 
     function addForm() {
@@ -208,6 +225,7 @@
         $('#modal-default').modal('show');
         $('#modal-default form')[0].reset();
         $('.modal-title').text('Add user');
+            $('.submit').text('Add user');
         document.getElementById("status").style.display = "none";
     }
 
@@ -223,7 +241,22 @@
             success: function(data) {
             $('#modal-default').modal('show');
             $('.modal-title').text('Edit user');
+            $('.submit').text('Edit user');
 
+            var role = data.role;
+            if(role == 'admin'){
+                $('#radmin').prop('selected',true)
+            }
+            if(role == 'client'){
+                $('#rclient').prop('selected',true)
+            }
+            var status = data.status;
+            if(status == 'ACTIVE'){
+                $('#optionsRadios1').prop('checked',true)
+            }
+            if(status == 'INACTIVE'){
+                $('#optionsRadios2').prop('checked',true)
+            }
             $('#id').val(data.id);
             $('#name').val(data.name);
             $('#email').val(data.email);
@@ -244,15 +277,11 @@
             $('.modal-title').text('Info Data User');
 
             $('#sname').val(data.name);
-            $('#semail').val(data.email);
-            $('#sphone').val(data.phone);
-            $('#saddress').val(data.address);
+            $('#semail').val(data.email);;
             $('#sstatus').val(data.status);
-            $('#susername').val(data.username);
+            $('#srole').val(data.role);
             $('#stgl').val(data.created_at);
-            $('#sroles').val(JSON.parse(data.roles));
-
-            document.getElementById("savatar").src = "{{asset('storage/')}}/"+data.avatar;
+            $('#sroles').val(data.roles);
             },
             error : function() {
                 alert("Nothing Data");

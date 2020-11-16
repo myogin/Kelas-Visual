@@ -22,7 +22,7 @@ Route::match(["GET", "POST"], "/register", function () {
 })->name("register");
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/customer', 'HomeController@customer')->name('customer');
+Route::get('/course', 'HomeController@course')->name('course');
 
 Route::get('/ajax/users/search', 'UserController@ajaxSearch')->name("usersSearch");
 Route::resource("users", "UserController");

@@ -80,7 +80,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary pull-left">Tambah lessons</button>
+                <button type="submit" class="btn btn-primary pull-left submit">Tambah lessons</button>
                 <button type="buton" class="btn btn-default " data-dismiss="modal">Close</button>
 
             </div>
@@ -154,6 +154,8 @@
         $('#modal-default').modal('show');
         $('#modal-default form')[0].reset();
         $('.modal-title').text('Add lesson');
+
+        $('.submit').text('Add lesson');
         document.getElementById("status").style.display = "none";
     }
 
@@ -168,6 +170,8 @@
             success: function(data) {
             $('#modal-default').modal('show');
             $('.modal-title').text('Edit lesson');
+
+            $('.submit').text('Edit lesson');
 
             $('#id').val(data.id);
             $('#name').val(data.name);

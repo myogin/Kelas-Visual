@@ -12,6 +12,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // OTORISASI GATE
+        $this->middleware(function ($request, $next) {
+            if (Gate::allows('manage-users')) return $next($request);
+            abort(404, 'Halaman Tidak Ditemukan');
+        });
+
+    }
     public function index()
     {
         //
@@ -42,7 +51,9 @@ class UserController extends Controller
         //
         $validation = \Validator::make($request->all(),[
             "name" => "required|min:5|max:100",
+            "email" => "required|email|unique:users",
             "password" => "required",
+            "role" => "required",
             "password2" => "required|same:password"
         ])->validate();
 
@@ -99,13 +110,18 @@ class UserController extends Controller
         $validation = \Validator::make($request->all(),[
             "name" => "required|min:5|max:100",
             "email" => "required|email|unique:users,email,".$id,
-            "password2" => "same:password"
+            "password" => "required",
+            "role" => "required",
+            "password2" => "required|same:password"
         ])->validate();
 
         $user = \App\User::findOrFail($id);
         $user->name = $request->get('name');
+        $user->email = $request->get('email');
         $user->password = \Hash::make($request->get('password'));
 
+        $user->role = $request->get('role');
+        $user->status = $request->get('status');
         $user->update();
         return response()->json([
             'success' => true,

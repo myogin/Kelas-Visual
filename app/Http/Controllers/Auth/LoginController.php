@@ -32,7 +32,7 @@ class LoginController extends Controller
             return '/home';
             break;
           case 'client':
-            return '/customer';
+            return '/course';
             break;
 
           default:

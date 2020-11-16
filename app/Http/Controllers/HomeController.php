@@ -26,12 +26,16 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function customer()
+    public function course()
     {
+        $this->middleware(function ($request, $next) {
+            if (Gate::allows('manage-course')) return $next($request);
+            abort(404, 'Halaman Tidak Ditemukan');
+        });
         $lessons = \App\Lesson::All();
         $pratices = \App\Practice::All();
         $lessonss = \App\Lesson::with('practice')->get();
-        return view('customer.index', ['pratices' => $pratices, 'lessonss' => $lessonss]);
+        return view('course.index', ['pratices' => $pratices, 'lessonss' => $lessonss]);
     }
     public function apiless()
     {

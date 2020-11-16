@@ -14,6 +14,15 @@ class PraticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // OTORISASI GATE
+        $this->middleware(function ($request, $next) {
+            if (Gate::allows('manage-pratices')) return $next($request);
+            abort(404, 'Halaman Tidak Ditemukan');
+        });
+
+    }
     public function index()
     {
         //
@@ -43,7 +52,10 @@ class PraticeController extends Controller
     {
         //
         $validation = \Validator::make($request->all(),[
-            "pratice_name" => "required|min:5|max:100"
+
+            "lesson_id" => "required",
+            "pratice_name" => "required|min:5|max:100",
+            "link" => "required"
         ])->validate();
 
         $new_pratice = new \App\Practice;
@@ -96,7 +108,9 @@ class PraticeController extends Controller
     {
         //
         $validation = \Validator::make($request->all(),[
-            "name" => "required|min:5|max:100"
+            "lesson_id" => "required",
+            "pratice_name" => "required|min:5|max:100",
+            "link" => "required"
         ])->validate();
 
         $pratice = \App\Practice::findOrFail($id);
@@ -105,7 +119,7 @@ class PraticeController extends Controller
         $pratice->link = $request->get('link');
         $pratice->description = $request->get('description');
 
-        $user->update();
+        $pratice->update();
         return response()->json([
             'success' => true,
             'message' => 'Pratice Updated'
@@ -121,7 +135,7 @@ class PraticeController extends Controller
     public function destroy($id)
     {
         //
-        $pratice = \App\Pratice::findOrFail($id);
+        $pratice = \App\Practice::findOrFail($id);
 
 
         $pratice->delete();
@@ -138,7 +152,7 @@ class PraticeController extends Controller
             ->addColumn('action', function($pratice){
                 return '' .
                 '<a onclick="editForm('. $pratice->id .')" class="btn btn-info btn-flat btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> '.
-                '<a onclick="showForm('. $pratice->id .')" class="btn btn-success btn-flat btn-xs"><i class="fa fa-eye"></i> Show</a> '  ;
+                '<a onclick="deleteData('. $pratice->id .')" class="btn btn-danger btn-flat btn-xs"><i class="fa fa-trash"></i> Delete</a> '  ;
             })
             ->rawColumns(['show_photo', 'action'])->make(true);
     }

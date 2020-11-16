@@ -7,7 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom -->
-    <link rel="stylesheet" href="{{asset('css/customer.css')}}">
+    <link rel="stylesheet" href="{{asset('css/course.css')}}">
     <style>
         .btn-info {
     color: #fff !important;
@@ -15,19 +15,36 @@
     border-color: none !important;
     border: none !important;
 }
+    .jumbotron-heading{
+        color: #fff;
+    }
     </style>
 </head>
 <body class="bg-color">
 
     <section class="jumbotron text-center">
+
+        @if (Auth::user()->role=='admin')
+        <div class="pull-left">
+                <a href="{{route('users.index')}}"><button type="submit" class="btn btn-default btn-flat" style="float: left;">Dashboard</button></a>
+
+            </div>
+        @endif
+        <div class="pull-right">
+            <form action="{{route("logout")}}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-default btn-flat" style="float: right;">Log Out</button>
+            </form>
+            </div>
         <div class="container">
-          <h1 class="jumbotron-heading">Album example</h1>
+          <h1 class="jumbotron-heading">Kelas Visual</h1>
           <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
           <p>
             <a href="#" class="btn btn-primary my-2">Main call to action</a>
             <a href="#" class="btn btn-secondary my-2">Secondary action</a>
           </p>
         </div>
+
       </section>
 
     <div class="container">

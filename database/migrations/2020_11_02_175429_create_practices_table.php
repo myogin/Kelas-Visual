@@ -18,10 +18,10 @@ class CreatePracticesTable extends Migration
             $table->unsignedBigInteger('lesson_id');
             $table->string('pratice_name');
             $table->string('link');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
 
-            $table->foreign('lesson_id')->references('id')->on('lessons');
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
 

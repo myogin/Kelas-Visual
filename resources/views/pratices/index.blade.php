@@ -37,6 +37,7 @@
                         <tr>
                             <th>No</th>
                             <th>Name</th>
+                            <th>Link</th>
                             <th>Aksi</th>
                         </tr>
                         </thead>
@@ -47,6 +48,7 @@
                         <tr>
                             <th>No</th>
                             <th>Name</th>
+                            <th>Link</th>
                             <th>Aksi</th>
                         </tr>
                         </tfoot>
@@ -76,7 +78,7 @@
                         <label>Lesson</label>
                         <select class="form-control select2" name="lesson_id" id="lesson_id" style="width: 100%;"
                         placeholder="Lesson">
-                        <option value="">Select Product</option>
+                        <option value="">Select Pratice</option>
                         @foreach ($lessons as $lesson)
                         <option value="{{$lesson->id}}">{{$lesson->name}}</option>
                         @endforeach
@@ -98,7 +100,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary pull-left">Tambah pratices</button>
+                <button type="submit" class="btn btn-primary pull-left submit">Tambah pratices</button>
                 <button type="buton" class="btn btn-default " data-dismiss="modal">Close</button>
 
             </div>
@@ -182,6 +184,7 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
                 },width: '20'},
         {data: 'pratice_name', name: 'pratice_name'},
+        {data: 'link', name: 'link'},
         {data: 'action', name: 'action', orderable: false, searchable: false,width: '115px'}
         ]
     });
@@ -192,6 +195,8 @@
         $('#modal-default').modal('show');
         $('#modal-default form')[0].reset();
         $('.modal-title').text('Add pratice');
+
+        $('.submit').text('Add pratice');
     }
 
     function editForm(id) {
@@ -205,29 +210,13 @@
             success: function(data) {
             $('#modal-default').modal('show');
             $('.modal-title').text('Edit pratice');
+            $('.submit').text('Edit pratice');
 
             $('.select2').val(data.lesson_id).trigger('change');
             $('#id').val(data.id);
             $('#pratice_name').val(data.pratice_name);
-            },
-            error : function() {
-                alert("Nothing Data");
-            }
-        });
-        }
-        function showForm(id) {
-        document.getElementById("status").style.display = "block";
-        $.ajax({
-            url: "{{ url('pratices') }}" + '/' + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data) {
-            $('#modal-show').modal('show');
-            $('.modal-title').text('Info Data pratice');
-
-            $('#sname').val(data.name);
-
-            document.getElementById("savatar").src = "{{asset('storage/')}}/"+data.avatar;
+            $('#link').val(data.link);
+            $('#description').val(data.description);
             },
             error : function() {
                 alert("Nothing Data");

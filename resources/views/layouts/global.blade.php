@@ -164,10 +164,10 @@ desired effect
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Navigasi</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="{{ (request()->is('home*')) ? 'active' : '' }}">
+            {{-- <li class="{{ (request()->is('home*')) ? 'active' : '' }}">
                 <a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a>
-            </li>
-            <li class="header">User</li>
+            </li> --}}
+            {{-- <li class="header">User</li> --}}
 
                 <!-- Optionally, you can add icons to the links -->
                 <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
@@ -187,8 +187,8 @@ desired effect
                 </li>
 
                 <!-- Optionally, you can add icons to the links -->
-                <li class="{{ (request()->is('customer*')) ? 'active' : '' }}">
-                    <a href="{{route('customer')}}"><i class="fa fa-user"></i> <span>customer</span></a>
+                <li class="{{ (request()->is('course*')) ? 'active' : '' }}">
+                    <a href="{{route('course')}}"><i class="fa fa-user"></i> <span>Course</span></a>
                 </li>
 
 
